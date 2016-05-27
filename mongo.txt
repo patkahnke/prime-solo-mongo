@@ -1,0 +1,82 @@
+//Tasks
+//Create a collection named orders.
+db.createCollection("orders")
+
+//Insert at least 3 documents that represent an order. IMPORTANT: See section below for fields.
+db.orders.insert (
+{orderDate: new Date("5/12/2016"),
+orderTotal: 20,
+lineItems: [{unitPrice: 5,
+quantity: 1,
+productName: "bourbon"},
+{unitPrice: 11,
+quantity: 1,
+productName: "scotch"},
+{unitPrice: 4,
+quantity: 1,
+productName: "beer"}]})
+
+db.orders.insert (
+{orderDate: new Date("5/16/2016"),
+orderTotal: 12,
+lineItems: [{unitPrice: 3,
+quantity: 2,
+productName: "soup"},
+{unitPrice: 2,
+quantity: 1,
+productName: "nuts"
+}]})
+
+db.orders.insert (
+{orderDate: new Date("5/21/2016"),
+orderTotal: 38,
+lineItems: [{unitPrice: 5,
+quantity: 4,
+productName: "lions"},
+{unitPrice: 2,
+quantity: 2,
+productName: "tigers"},
+{unitPrice: 7,
+quantity: 2,
+productName: "bears"}
+]})
+
+//Find a single order document, any order document.
+db.orders.findOne()
+
+//Find all orders and make them look pretty.
+db.orders.find().pretty()
+
+//Find all orders with an orderDate that is prior to 1/1/2016.
+db.orders.find({
+  orderDate: {$lt: new Date("2016-01-01")}
+  })
+
+//Find all orders with an orderDate that is after 1/1/2016.
+Find all orders with an orderDate that is prior to 1/1/2016.
+db.orders.find({
+  orderDate: {$gt: new Date("2016-01-01")}
+  })
+
+//Find orders with lineItems that have a quantity that is less than 50, but greater than 5. HINT: Look at $and and dot notation.
+db.orders.find({
+  "lineItems.quantity": {$lt: 50},
+  "lineItems.quantity":{$gt: 5}
+  })
+
+//Update one of your line items to 42.99. HINT: Look at dot notation
+db.orders.update({
+"lineItems.productName": "bourbon"},
+{ $set: {"unitPrice": 42.99} })
+
+//Remove one of your orders.
+db.orders.remove({
+"lineItems.productName": "beer"})
+
+//order fields
+//orderDate -- see https://docs.mongodb.org/manual/reference/method/Date/
+//orderTotal
+//lineItems -- an array of line item objects with fields
+//unitPrice
+//quantity
+//productName
